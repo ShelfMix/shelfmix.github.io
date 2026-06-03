@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Opening ShelfMix...</title>
+  <script>
+    const path = window.location.pathname.replace(/^\/+|\/+$/g, "");
+    const params = new URLSearchParams(window.location.search);
+
+    if (path) {
+      window.location.replace(`https://shareshuffle.com/shelf.html?s=${encodeURIComponent(path)}`);
+    } else if (params.get("s")) {
+      window.location.replace(`https://shareshuffle.com/shelf.html?s=${encodeURIComponent(params.get("s"))}`);
+    } else {
+      window.location.replace("https://shareshuffle.com");
+    }
+  </script>
+</head>
+<body>
+  Opening ShelfMix...
+</body>
+</html>
