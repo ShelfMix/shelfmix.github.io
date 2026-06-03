@@ -2,15 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <title>ShelfMix — Product Shelves by ShareShuffle</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ShelfMix — Share collections of products you love</title>
-  <meta name="description" content="ShelfMix helps you create and share collections of products, picks, gear, gift ideas, and recommendations. Powered by ShareShuffle.">
-  <meta property="og:title" content="ShelfMix">
-  <meta property="og:description" content="Create and share collections of products you love. Powered by ShareShuffle.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://shelfmix.com">
-  <meta property="og:image" content="https://shelfmix.com/og-image.png">
-  <meta name="twitter:card" content="summary_large_image">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" rel="stylesheet">
@@ -23,96 +16,357 @@
       --ss-cyan:#13c8ff;
       --ss-navy:#071426;
       --ss-ink:#102033;
-      --ss-cloud:#f5f8ff;
-      --ss-grad:linear-gradient(135deg,#ff7a18 0%,#ffc145 30%,#13c8ff 66%,#0d6efd 100%);
-      --ss-grad-dark:radial-gradient(circle at 12% 12%,rgba(255,122,24,.42),transparent 30%),radial-gradient(circle at 88% 18%,rgba(19,200,255,.33),transparent 30%),linear-gradient(135deg,#071426 0%,#102033 100%);
+      --ss-grad:linear-gradient(135deg,#ff7a18,#ffc145,#13c8ff,#0d6efd);
+      --ss-grad-dark:
+        radial-gradient(circle at 12% 12%,rgba(255,122,24,.38),transparent 30%),
+        radial-gradient(circle at 90% 20%,rgba(19,200,255,.32),transparent 28%),
+        linear-gradient(135deg,#071426 0%,#102033 100%);
     }
-    body { min-height:100vh; font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color:var(--ss-ink); background:var(--ss-grad-dark); }
-    .logo { width:58px; height:58px; border-radius:18px; display:grid; place-items:center; background:var(--ss-grad); color:white; font-weight:950; box-shadow:0 16px 40px rgba(13,110,253,.33); }
-    .hero { min-height:100vh; display:flex; align-items:center; padding:40px 0; }
-    .card-glass { border:1px solid rgba(255,255,255,.62); border-radius:36px; background:rgba(255,255,255,.94); box-shadow:0 32px 90px rgba(0,0,0,.35); overflow:hidden; }
-    .title { font-size:clamp(3rem,10vw,6.7rem); line-height:.88; letter-spacing:-.07em; font-weight:950; }
-    .gradient-text { background:var(--ss-grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
-    .btn-main { border:0; border-radius:999px; color:white; font-weight:900; padding:1rem 1.3rem; background:var(--ss-grad); box-shadow:0 18px 40px rgba(13,110,253,.25); }
-    .btn-main:hover { color:white; filter:saturate(1.1); transform:translateY(-1px); }
-    .shelf-preview { border-radius:28px; background:#fff; box-shadow:inset 0 0 0 1px rgba(13,110,253,.08); }
-    .mini-card { border-radius:20px; background:#f5f8ff; border:1px solid rgba(13,110,253,.08); }
-    .mini-img { width:58px; height:58px; border-radius:14px; object-fit:cover; background:#fff; }
-    .pill { display:inline-flex; align-items:center; gap:.45rem; border-radius:999px; padding:.5rem .8rem; background:rgba(13,110,253,.09); color:#1d4ed8; font-size:.86rem; font-weight:850; }
+
+    body {
+      min-height:100vh;
+      background:var(--ss-grad-dark);
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--ss-ink);
+    }
+
+    .brand-logo {
+      width:52px;
+      height:52px;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      color:white;
+      font-weight:950;
+      font-size:1.35rem;
+      background:var(--ss-grad);
+      box-shadow:0 12px 30px rgba(13,110,253,.33);
+    }
+
+    .hero-card {
+      border-radius:34px;
+      background:rgba(255,255,255,.96);
+      box-shadow:0 30px 90px rgba(0,0,0,.32);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.65);
+    }
+
+    .hero-cover {
+      min-height:220px;
+      background:
+        radial-gradient(circle at top left,rgba(255,193,69,.35),transparent 35%),
+        linear-gradient(135deg,#ffffff,#eef6ff);
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+    }
+
+    .hero-cover img {
+      width:100%;
+      max-height:360px;
+      object-fit:cover;
+      display:none;
+    }
+
+    .shelf-title {
+      font-size:clamp(2.2rem,8vw,4.8rem);
+      letter-spacing:-.06em;
+      font-weight:950;
+      line-height:.9;
+    }
+
+    .badge-ss {
+      border-radius:999px;
+      padding:.55rem .85rem;
+      background:rgba(13,110,253,.09);
+      color:#1d4ed8;
+      font-weight:850;
+      font-size:.85rem;
+      display:inline-flex;
+      gap:.4rem;
+      align-items:center;
+    }
+
+    .product-card {
+      border:0;
+      border-radius:28px;
+      overflow:hidden;
+      box-shadow:0 18px 50px rgba(0,0,0,.18);
+      height:100%;
+      background:white;
+    }
+
+    .product-image-wrap {
+      height:210px;
+      display:grid;
+      place-items:center;
+      background:#f5f8ff;
+      overflow:hidden;
+    }
+
+    .product-image-wrap img {
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      padding:14px;
+    }
+
+    .btn-ss {
+      border:0;
+      border-radius:999px;
+      color:white;
+      font-weight:900;
+      background:var(--ss-grad);
+    }
+
+    .tiny-link {
+      color:rgba(255,255,255,.85);
+      text-decoration:none;
+      font-weight:800;
+    }
   </style>
 </head>
+
 <body>
-  <main class="hero">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-xl-10">
-          <div class="card-glass p-4 p-lg-5">
-            <div class="row align-items-center g-5">
-              <div class="col-lg-7">
-                <div class="d-flex align-items-center gap-3 mb-4">
-                  <div class="logo"><i class="fa-solid fa-layer-group fs-3"></i></div>
-                  <div>
-                    <div class="fw-bold fs-3 lh-1">ShelfMix</div>
-                    <div class="text-secondary">Powered by ShareShuffle</div>
-                  </div>
-                </div>
+  <main class="container py-4 py-lg-5">
 
-                <span class="pill mb-4"><i class="fa-solid fa-shuffle"></i> Collections worth sharing</span>
+    <div class="d-flex justify-content-between align-items-center mb-4 text-white">
+      <a href="/" class="d-flex align-items-center gap-3 text-decoration-none text-white">
+        <div class="brand-logo">S</div>
+        <div>
+          <div class="fw-bold fs-4 lh-1">ShelfMix</div>
+          <div class="small text-white-50">Product shelves by ShareShuffle</div>
+        </div>
+      </a>
 
-                <h1 class="title mb-4">
-                  Build a shelf.<br>
-                  <span class="gradient-text">Share the mix.</span>
-                </h1>
+      <a href="https://shareshuffle.com" class="btn btn-outline-light rounded-pill fw-bold">
+        ShareShuffle
+      </a>
+    </div>
 
-                <p class="lead fs-4 text-secondary mb-4">
-                  ShelfMix is the collection side of ShareShuffle: gear picks, gift ideas, wish lists, product recommendations, and the links you keep sending anyway.
-                </p>
+    <section class="hero-card mb-4">
+      <div class="hero-cover">
+        <img id="coverImage" alt="Shelf cover">
+        <i id="coverFallback" class="fa-solid fa-layer-group fa-5x" style="background:var(--ss-grad);-webkit-background-clip:text;color:transparent;"></i>
+      </div>
 
-                <div class="d-flex flex-wrap gap-3">
-                  <a class="btn btn-main btn-lg" href="https://shareshuffle.com">
-                    <i class="fa-solid fa-plus me-2"></i>Create with ShareShuffle
-                  </a>
-                  <a class="btn btn-outline-dark btn-lg rounded-pill fw-bold" href="https://shareshuffle.com/dashboard.html">
-                    <i class="fa-solid fa-chart-simple me-2"></i>Dashboard
-                  </a>
-                </div>
-              </div>
+      <div class="p-4 p-lg-5">
+        <span class="badge-ss mb-3">
+          <i class="fa-solid fa-layer-group"></i>
+          ShelfMix
+        </span>
 
-              <div class="col-lg-5">
-                <div class="shelf-preview p-4">
-                  <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div>
-                      <div class="small text-secondary fw-bold">EXAMPLE SHELF</div>
-                      <h3 class="fw-black mb-0">Rich's Bass Gear</h3>
-                    </div>
-                    <span class="badge rounded-pill text-bg-primary">shfl.me/bass</span>
-                  </div>
+        <h1 id="shelfTitle" class="shelf-title mb-3">Loading shelf...</h1>
 
-                  <div class="mini-card p-3 mb-3 d-flex gap-3 align-items-center">
-                    <div class="mini-img d-grid place-items-center text-primary"><i class="fa-solid fa-guitar fs-3"></i></div>
-                    <div><div class="fw-bold">Yamaha BB735A</div><div class="small text-secondary">Favorite bass pick</div></div>
-                  </div>
+        <p id="shelfDescription" class="lead text-secondary mb-4">
+          Loading products...
+        </p>
 
-                  <div class="mini-card p-3 mb-3 d-flex gap-3 align-items-center">
-                    <div class="mini-img d-grid place-items-center text-primary"><i class="fa-solid fa-sliders fs-3"></i></div>
-                    <div><div class="fw-bold">Zoom MS-60B+</div><div class="small text-secondary">Compact effects</div></div>
-                  </div>
+        <div class="d-flex flex-wrap gap-2">
+          <button id="copyShelf" class="btn btn-ss px-4 py-2">
+            <i class="fa-solid fa-link me-2"></i>
+            Copy Shelf Link
+          </button>
 
-                  <div class="mini-card p-3 d-flex gap-3 align-items-center">
-                    <div class="mini-img d-grid place-items-center text-primary"><i class="fa-solid fa-volume-high fs-3"></i></div>
-                    <div><div class="fw-bold">Peterson DI</div><div class="small text-secondary">Clean stage output</div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="text-center text-white-50 mt-4 small">
-            ShelfMix.com is a ShareShuffle project. Short links powered by SHFL.ME.
-          </div>
+          <a id="shortShelfLink" class="btn btn-outline-secondary rounded-pill px-4 py-2" href="#" target="_blank">
+            Open short link
+          </a>
         </div>
       </div>
+    </section>
+
+    <div id="status" class="text-white-50 mb-3">Loading...</div>
+
+    <section id="products" class="row g-4"></section>
+
+    <div class="text-center mt-5">
+      <a class="tiny-link" href="https://shareshuffle.com">
+        Create your own ShelfMix with ShareShuffle
+      </a>
     </div>
+
   </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      collection,
+      getDocs,
+      query,
+      where,
+      orderBy
+    } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC-IdAGNybUmS4LPqQX-WrOVtIDPPl8ZzE",
+      authDomain: "shareshuffle-c7f96.firebaseapp.com",
+      projectId: "shareshuffle-c7f96",
+      storageBucket: "shareshuffle-c7f96.firebasestorage.app",
+      messagingSenderId: "507028011652",
+      appId: "1:507028011652:web:97c161c63b7940af0f60d1",
+      measurementId: "G-C8W9TBP705"
+    };
+
+    const AMAZON_TAG = "shareshuffle-20";
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    function getShelfSlug() {
+      const params = new URLSearchParams(location.search);
+      const querySlug = params.get("s");
+
+      if (querySlug) return querySlug;
+
+      return location.pathname.replace(/^\/+/, "").trim();
+    }
+
+    function makeAmazonAffiliateUrl(originalUrl) {
+      const url = new URL(originalUrl);
+      url.searchParams.set("tag", AMAZON_TAG);
+      return url.toString();
+    }
+
+    function escapeHtml(value = "") {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function shelfNameFromSlug(slug) {
+      return slug
+        .split("-")
+        .filter(Boolean)
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ");
+    }
+
+    async function loadShelf() {
+      const slug = getShelfSlug();
+      const status = document.getElementById("status");
+      const products = document.getElementById("products");
+
+      if (!slug) {
+        document.getElementById("shelfTitle").innerText = "ShelfMix";
+        document.getElementById("shelfDescription").innerText =
+          "Create and share collections of products you love.";
+        status.textContent = "Open a shelf link to view products.";
+        return;
+      }
+
+      const shelfRef = doc(db, "shelves", slug);
+      const shelfSnap = await getDoc(shelfRef);
+      const shelfData = shelfSnap.exists() ? shelfSnap.data() : {};
+
+      const title = shelfData.name || shelfNameFromSlug(slug);
+      const description =
+        shelfData.description ||
+        "A curated product shelf shared with ShelfMix.";
+
+      document.title = `${title} — ShelfMix`;
+      document.getElementById("shelfTitle").innerText = title;
+      document.getElementById("shelfDescription").innerText = description;
+
+      const coverImage = document.getElementById("coverImage");
+      const coverFallback = document.getElementById("coverFallback");
+
+      if (shelfData.image) {
+        coverImage.onload = () => {
+          coverImage.style.display = "block";
+          coverFallback.style.display = "none";
+        };
+        coverImage.src = shelfData.image;
+      }
+
+      const shortUrl = `https://shfl.me/${slug}`;
+      document.getElementById("shortShelfLink").href = shortUrl;
+
+      document.getElementById("copyShelf").addEventListener("click", async () => {
+        await navigator.clipboard.writeText(shortUrl);
+        status.textContent = "Shelf link copied.";
+      });
+
+      const q = query(
+        collection(db, "shares"),
+        where("shelfSlug", "==", slug),
+        orderBy("created", "desc")
+      );
+
+      const snap = await getDocs(q);
+
+      products.innerHTML = "";
+
+      if (snap.empty) {
+        status.textContent = "No products found in this shelf yet.";
+        return;
+      }
+
+      snap.forEach((docSnap) => {
+        const data = docSnap.data();
+        const image = data.image || "";
+        const title = data.title || "Untitled product";
+        const note = data.note || "";
+        const productUrl = data.url ? makeAmazonAffiliateUrl(data.url) : "#";
+
+        const col = document.createElement("div");
+        col.className = "col-md-6 col-lg-4";
+
+        col.innerHTML = `
+          <article class="product-card">
+            <div class="product-image-wrap">
+              ${
+                image
+                  ? `<img src="${escapeHtml(image)}" alt="">`
+                  : `<i class="fa-solid fa-gift fa-4x text-secondary"></i>`
+              }
+            </div>
+
+            <div class="p-4">
+              <h3 class="h5 fw-bold">${escapeHtml(title)}</h3>
+              <p class="text-secondary">${escapeHtml(note)}</p>
+
+              <div class="d-grid gap-2">
+                <a
+                  class="btn btn-ss"
+                  href="${escapeHtml(productUrl)}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i class="fa-brands fa-amazon me-2"></i>
+                  View Product
+                </a>
+
+                <a
+                  class="btn btn-outline-secondary rounded-pill"
+                  href="https://shareshuffle.com/share.html?id=${docSnap.id}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Open Share Page
+                </a>
+              </div>
+            </div>
+          </article>
+        `;
+
+        products.appendChild(col);
+      });
+
+      status.textContent = `${snap.size} products in this shelf.`;
+    }
+
+    loadShelf().catch((error) => {
+      console.error(error);
+      document.getElementById("status").textContent =
+        "Could not load shelf. Check console.";
+    });
+  </script>
 </body>
 </html>
