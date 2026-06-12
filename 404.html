@@ -6,12 +6,24 @@
   <title>Opening ShelfMix...</title>
   <script>
     const path = window.location.pathname.replace(/^\/+|\/+$/g, "");
+    const parts = path.split("/").filter(Boolean).map(decodeURIComponent);
     const params = new URLSearchParams(window.location.search);
 
-    if (path) {
-      window.location.replace(`https://shareshuffle.com/shelf.html?s=${encodeURIComponent(path)}`);
+    const openShelf = ({ handle = "", shelf = "" } = {}) => {
+      const q = new URLSearchParams();
+      if (handle) q.set("u", handle.replace(/^@+/, ""));
+      if (shelf) q.set("s", shelf);
+      window.location.replace(`https://shareshuffle.com/shelf.html?${q.toString()}`);
+    };
+
+    if (parts.length >= 2) {
+      openShelf({ handle: parts[0], shelf: parts[1] });
+    } else if (parts.length === 1) {
+      openShelf({ shelf: parts[0] });
+    } else if (params.get("u") && params.get("s")) {
+      openShelf({ handle: params.get("u"), shelf: params.get("s") });
     } else if (params.get("s")) {
-      window.location.replace(`https://shareshuffle.com/shelf.html?s=${encodeURIComponent(params.get("s"))}`);
+      openShelf({ shelf: params.get("s") });
     } else {
       window.location.replace("https://shareshuffle.com");
     }
